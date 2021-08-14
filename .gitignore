@@ -6,3 +6,4 @@ pycache/
 # Flask stuff:
 instance/
 .webassets-cache
+*.pyc
