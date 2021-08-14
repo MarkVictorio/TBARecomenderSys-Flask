@@ -1,10 +1,10 @@
-
 import os
 import secrets
 from PIL import Image
 from flask import url_for, current_app
 from flask_mail import Message
 from flaskblog import mail
+from flask_login import current_user
 
 
 def save_picture(form_picture):
@@ -17,6 +17,10 @@ def save_picture(form_picture):
     i = Image.open(form_picture)
     i.thumbnail(output_size)
     i.save(picture_path)
+
+    prev_picture = os.path.join(current_app.root_path, 'static/profile_pics', current_user.image_file)
+    if os.path.exists(prev_picture) and os.path.basename(prev_picture) != 'default.jpg':
+        os.remove(prev_picture)
 
     return picture_fn
 
