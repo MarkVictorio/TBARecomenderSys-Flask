@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="content-section">
+    <h1>Quiz Title</h1>
+    <p>The description of the quiz should be here.</p>
+    <article class="content-section">
+        <div class="py-2 h5"><b>What is the meaning of GUI?</b></div> <!-- title  -->
+        <div class="ml-md-3 ml-sm-3 pl-md-5 pt-sm-0 pt-3" id="options">
+        <!-- choices  -->
+        <form method="POST" action = "/quiz">
+            <label class="options">Global User Interface
+                <input type="radio" name="choices" value = 1 > 
+                <span class="checkmark"></span> 
+                </label>
+ 
+                <label class="options">Graphical User Interface
+                <input type="radio" name="choices" value = 2> 
+                <span class="checkmark"></span>
+                </label>
+        
+                <label class="options">Graphing User Integration 
+                <input type="radio" name="choices" value = 3>
+                <span class="checkmark"></span> 
+                </label> 
+
+                <label class="options">Graphics User Integration
+                <input type="radio" name="choices" value = 4>
+                <span class="checkmark"></span> 
+                </label>
+                </div>
+                <div class="d-flex align-items-center pt-3">
+                    <div class="ml-auto mr-sm-5"> <button class="btn btn-danger">Next</button> </div>
+                </div>
+                <h4>answer - {{choice}}</h4>
+        </form>
+
+    </article>
+</div>
+{% endblock content %}

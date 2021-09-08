@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="content-section">
+    <h1>Quiz List</h1>
+    <article class="content-section">
+          <h2 class="article-title"><a class="article-title" href="{{ url_for('admin.quiz')}}">Quiz 1</a></h2>
+    </article>
+    <article class="content-section">
+        <h2 class="article-title"><a class="article-title" href="#">Quiz 2</a></h2>
+    </article>
+    <article class="content-section">
+        <h2 class="article-title"><a class="article-title" href="#">Quiz 3</a></h2>
+    </article>
+</div>
+{% endblock content %}

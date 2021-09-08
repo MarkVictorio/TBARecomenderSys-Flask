@@ -36,7 +36,7 @@
                 <a class="nav-item nav-link" href="{{ url_for('users.account') }}">Account</a>
                 <a class="nav-item nav-link" href="{{ url_for('users.logout') }}">Logout</a>
                 {%if current_user.admin == 1%}
-                  <a class="nav-item nav-link" href="#">ADMIN MODE</a>
+                  <a class="nav-item nav-link" href="{{ url_for('admin.administrator') }}">ADMIN MODE</a>
                 {% endif %}
               {% else %}
                 <a class="nav-item nav-link" href="{{ url_for('users.login') }}">Login</a>

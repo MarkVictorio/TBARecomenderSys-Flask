@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="content-section">
+    <h1>Admin Options</h1>
+    <article class="content-section">
+          <h2 class="article-title"><a class="article-title" href="{{ url_for('admin.show_quiz') }}">Show Quizzes</a></h2>
+          <p class="article-content">Create a quiz for students</p>
+    </article>
+    <article class="content-section">
+        <h2 class="article-title"><a class="article-title" href="#">Show Quiz Results</a></h2>
+        <p class="article-content">Check the previous Quizzes</p>
+    </article>
+    <article class="content-section">
+        <h2 class="article-title"><a class="article-title" href="{{ url_for('admin.create_quiz')}}">Create a Quiz</a></h2>
+        <p class="article-content">Create a quiz for students</p>
+    </article>
+</div>
+{% endblock content %}

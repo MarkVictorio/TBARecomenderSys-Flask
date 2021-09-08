@@ -18,7 +18,7 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(60), nullable=False)
     posts = db.relationship('Post', backref='author', lazy=True)
     admin = db.Column(db.Boolean)
-
+        
     def get_reset_token(self, expires_sec=1800):
         s = Serializer(current_app.config['SECRET_KEY'], expires_sec)
         return s.dumps({'user_id': self.id}).decode('utf-8')
@@ -45,3 +45,31 @@ class Post(db.Model):
 
     def __repr__(self):
         return f"Post('{self.title}', '{self.date_posted}')"
+
+class Quiz(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(100), nullable=False)
+    decription = db.Column(db.String(300), nullable=True)
+    total_score = db.Column(db.Integer, nullable = False)
+    questions = db.relationship('Question', backref = 'Quiz', lazy=True)
+
+class Question(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    item_desc = db.Column(db.String(300),nullable=False)
+    answer = db.Column(db.Integer, nullable=False)
+    quiz_id = db.Column(db.Integer, db.ForeignKey('quiz.id'),nullable = False)
+    choices = db.relationship('Choices', backref = 'Question')
+    user_answer = db.relationship('Quiz_user_answer', backref = 'Answers', lazy=True)
+
+class Choices(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    question_id = db.Column(db.Integer, db.ForeignKey('question.id'),nullable = False)
+    choice = db.Column(db.String, nullable=False)
+
+class Quiz_user_answer(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    quiz_id = db.Column(db.Integer,db.ForeignKey('user.id'), nullable=False)
+    question_id = db.Column(db.Integer, db.ForeignKey('question.id'),nullable = False)
+    user_answer = db.Column(db.Integer, nullable=False)
+    is_correct = db.Column(db.Boolean, nullable=False)
