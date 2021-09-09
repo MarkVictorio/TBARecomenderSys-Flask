@@ -1,15 +1,26 @@
 {% extends "layout.html" %}
 {% block content %}
-<div class="content-section">
-    <h1>Quiz List</h1>
-    <article class="content-section">
-          <h2 class="article-title"><a class="article-title" href="{{ url_for('admin.quiz')}}">Quiz 1</a></h2>
-    </article>
-    <article class="content-section">
-        <h2 class="article-title"><a class="article-title" href="#">Quiz 2</a></h2>
-    </article>
-    <article class="content-section">
-        <h2 class="article-title"><a class="article-title" href="#">Quiz 3</a></h2>
-    </article>
-</div>
+    <div class="content-section">
+        <h1>Quiz List</h1>
+        <br />
+        {% for quiz in quizzes.items %}
+            <article class="content-section">
+                <h4>Quiz {{ quiz.id}}</h4>
+                <h2><a class = "article-title"  href="{{ url_for('admin.quiz', quiz_id = quiz.id)}}"> {{quiz.title}}</a></h2>
+                <p class = "article-content">{{ quiz.description }}</p>
+            </article>
+        {% endfor %}
+        {% for page_num in quizzes.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+        {% if page_num %}
+            {% if quizzes.page == page_num %}
+            <a class="btn btn-info mb-4" href="{{ url_for('admin.show_quiz', page=page_num) }}">{{ page_num }}</a>
+            {% else %}
+            <a class="btn btn-outline-info mb-4" href="{{ url_for('admin.show_quiz', page=page_num) }}">{{ page_num }}</a>
+            {% endif %}
+      {% else %}
+        ...
+      {% endif %}
+    {% endfor %}
+    </div>
+
 {% endblock content %}

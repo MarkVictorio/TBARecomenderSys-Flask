@@ -49,13 +49,13 @@ class Post(db.Model):
 class Quiz(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
-    decription = db.Column(db.String(300), nullable=True)
+    description = db.Column(db.String(300), nullable=True)
     total_score = db.Column(db.Integer, nullable = False)
     questions = db.relationship('Question', backref = 'Quiz', lazy=True)
 
 class Question(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    item_desc = db.Column(db.String(300),nullable=False)
+    item_desc = db.Column(db.String, nullable=False)
     answer = db.Column(db.Integer, nullable=False)
     quiz_id = db.Column(db.Integer, db.ForeignKey('quiz.id'),nullable = False)
     choices = db.relationship('Choices', backref = 'Question')

@@ -3,7 +3,7 @@ from flask import (render_template, url_for, flash,
                    redirect, request, abort, Blueprint)
 from flask_login import current_user, login_required
 from flaskblog.admin.forms import (QuestionForm, QuizForm)
-from flaskblog.models import Quiz, Question, Choices
+from flaskblog.models import Quiz, Question, Choices , Post
 from flaskblog import db
 
 admin = Blueprint('admin', __name__)
@@ -21,13 +21,18 @@ def administrator():
 def show_quiz():
     if current_user.admin != 1:
         return redirect(url_for('main.home'))
-    return render_template('show_quiz.html', title='Quiz List')
+    page = request.args.get('page', 1, type=int)
+    quizzes = Quiz.query.order_by(Quiz.id.asc()).paginate(page=page, per_page=10)
+    return render_template('show_quiz.html', title='Quiz List', quizzes = quizzes)
 
-@admin.route("/quiz", methods=['GET','POST'])
+@admin.route("/quiz/<int:quiz_id>", methods=['GET','POST'])
 @login_required
-def quiz():
-    choice = request.form.get('choices')
-    return render_template('quiz.html', title = 'Quiz',choice = choice)
+def quiz(quiz_id):
+    quizzes = Quiz.query.get_or_404(quiz_id)
+    question = Question.query.get(quiz_id)
+
+    u_choice = request.form.get('choices')
+    return render_template('quiz.html', title = quizzes.title , u_choice = u_choice, quizzes = quizzes, question = question)
 
 @admin.route("/create_quiz" , methods=['GET', 'POST'])
 @login_required

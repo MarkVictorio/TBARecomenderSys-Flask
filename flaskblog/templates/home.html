@@ -9,7 +9,6 @@
               {%if post.author.admin == 1 %}
                     <small class="adminU">ADMINISTRATOR</small>
               {% endif %}
-              <!-- <a class="mr-2" href="{{ url_for('users.user_posts',username=post.author.username)}}">{{ admin }}</a> -->
               <small class="text-muted">{{ post.date_posted.strftime('%Y-%m-%d') }}</small>
             </div>
             <h2><a class="article-title" href="{{ url_for('posts.post', post_id=post.id) }}">{{ post.title }}</a></h2>

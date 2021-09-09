@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
 <div class="content-section">
-    <form action="POST" action = "">
+    <form method="POST" action = "">
         {{ form.hidden_tag() }}
         <fieldset class="form-group">
             <legend class="border-bottom mb-4">Create a Quiz</legend>
@@ -32,8 +32,8 @@
                 {% endif %}
             </div>
 
-            {% for nested in form.items %}
-            <br / > {{ nested(class="form-control form-control-lg") }} 
+            {% for items in form.items %}
+            <br /> {{ items(class="form-control form-control-lg") }} 
             {% endfor %}
 
         </fieldset>

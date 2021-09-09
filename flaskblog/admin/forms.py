@@ -15,6 +15,5 @@ class QuestionForm(Form):
 class QuizForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
     description = TextAreaField('Quiz Desciption', validators=[DataRequired()])
-    total_score = IntegerField('Number of Items', validators=[DataRequired()])
     items = FieldList(FormField(QuestionForm),min_entries=2)
     submit = SubmitField('Create')
