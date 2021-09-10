@@ -6,10 +6,10 @@ from wtforms.validators import DataRequired
 
 class QuestionForm(Form):
     question = StringField('Question',validators=[DataRequired()])
-    choices1 = StringField('Choice 1',validators=[DataRequired()])
-    choices2 = StringField('Choice 2',validators=[DataRequired()])
-    choices3 = StringField('Choice 3',validators=[DataRequired()])
-    choices4 = StringField('Choice 4',validators=[DataRequired()])
+    choice_1 = StringField('Choice 1',validators=[DataRequired()])
+    choice_2 = StringField('Choice 2',validators=[DataRequired()])
+    choice_3 = StringField('Choice 3',validators=[DataRequired()])
+    choice_4 = StringField('Choice 4',validators=[DataRequired()])
     answer = IntegerField('Answer',validators=[DataRequired()])
 
 class QuizForm(FlaskForm):

@@ -58,13 +58,11 @@ class Question(db.Model):
     item_desc = db.Column(db.String, nullable=False)
     answer = db.Column(db.Integer, nullable=False)
     quiz_id = db.Column(db.Integer, db.ForeignKey('quiz.id'),nullable = False)
-    choices = db.relationship('Choices', backref = 'Question')
+    choice_1 = db.Column(db.String)
+    choice_2 = db.Column(db.String)
+    choice_3 = db.Column(db.String)
+    choice_4 = db.Column(db.String)
     user_answer = db.relationship('Quiz_user_answer', backref = 'Answers', lazy=True)
-
-class Choices(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    question_id = db.Column(db.Integer, db.ForeignKey('question.id'),nullable = False)
-    choice = db.Column(db.String, nullable=False)
 
 class Quiz_user_answer(db.Model):
     id = db.Column(db.Integer, primary_key=True)
