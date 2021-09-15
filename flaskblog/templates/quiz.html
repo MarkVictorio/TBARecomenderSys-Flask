@@ -4,40 +4,43 @@
     <h1>{{ quizzes.title }}</h1>
     <p>{{ quizzes.description }}</p>
 
+
     {% for question in questions.items %}
     <article class="content-section">
-        <div class="py-2 h5"><b>{{question.item_desc}}</b></div>
+        <div class="py-2 h5"><b>Q.{{ loop.index0 + 1 }} {{question.item_desc}}</b></div>
         <div class="ml-md-3 ml-sm-3 pl-md-5 pt-sm-0 pt-3" id="options">
-
+                
             <form method="POST" action = "">
+            
                 <label class="options">{{question.choice_1}}
-                <input type="radio" name="choices" value = 1 > 
+                <input type="radio" name="Choice {{ loop.index0 + 1 }}" value = 1 > 
                 <span class="checkmark"></span> 
                 </label>
-    
+
                 <label class="options">{{question.choice_2}}
-                <input type="radio" name="choices" value = 2> 
+                <input type="radio" name="Choice {{ loop.index0 + 1 }}" value = 2> 
                 <span class="checkmark"></span>
                 </label>
                 
                 <label class="options">{{question.choice_3}}
-                <input type="radio" name="choices" value = 3>
+                <input type="radio" name="Choice {{ loop.index0 + 1 }}" value = 3>
                 <span class="checkmark"></span> 
                 </label> 
     
                 <label class="options">{{question.choice_4}}
-                <input type="radio" name="choices" value = 4>
+                <input type="radio" name="Choice {{ loop.index0 + 1 }}" value = 4>
                 <span class="checkmark"></span> 
+                
                 </label>
+                <input type="hidden" name="chosen" value="{{question.choices}}"/>
                 </div>
-            </form>
-    
-    </article>
+                
+        </article>
     {% endfor %}
-
-
-    <div class="d-flex align-items-center pt-3">
-        <div class="ml-auto mr-sm-5"> <button class="btn btn-danger">Submit</button> </div>
-    </div>
+        <div class="d-flex align-items-center pt-3">
+            <div class="ml-auto mr-sm-5"><input type="submit" class = "btn btn-danger"> </div>
+        </div>
+        </form>
+        <h4>{{user_choice}}</h4>
 </div>
 {% endblock content %}
