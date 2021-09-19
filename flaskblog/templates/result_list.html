@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="content-section">
+    <h1>Quiz Results</h1>
+    {% for quiz in quizzes.items %}
+        <article class="content-section">
+        <br />
+        <h2><a class = "article-title"  href="{{ url_for('main.results', quiz_id = quiz.id)}}">Quiz {{ quiz.id}} Results</h2>
+        <br />
+        </article>
+    {% endfor %}
+</div>
+{% endblock content %}

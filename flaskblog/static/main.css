@@ -26,6 +26,13 @@ small.adminU{
   font-weight: 500;
 }
 
+p.correct{
+  color: rgb(33, 173, 45);
+}
+
+p.incorr{
+  color:rgb(182, 38, 57);
+}
 .content-section {
   background: #ffffff;
   padding: 10px 20px;

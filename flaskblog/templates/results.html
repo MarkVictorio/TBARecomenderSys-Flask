@@ -2,5 +2,44 @@
 {% block content %}
 <div class = "content-section">
     <h1> Results - Quiz {{quiz_id}} </h1>
+    <h1>{{ quizzes.title }}</h1>
+    <p>{{ quizzes.description }}</p>
+
+    {% for Question, Quiz_user_answer in user_results %}
+        <div class = "content-section">
+            <div class="py-2 h5"><b>Question {{ loop.index0 + 1 }}</b></div>
+            <h3>{{Question.item_desc}}</h3> 
+            <br />
+
+            {% if Quiz_user_answer.user_answer == 1  %}
+                <p><b>Your Answer: {{Question.choice_1}}</b></p>
+            {% elif Quiz_user_answer.user_answer == 2 %}
+                <p><b>Your Answer: {{Question.choice_2}}</b></p>
+            {% elif Quiz_user_answer.user_answer == 3  %}
+                <p><b>Your Answer: {{Question.choice_3}}</b></p>
+            {% elif Quiz_user_answer.user_answer == 4 %}
+                <p><b>Your Answer: {{Question.choice_4}}</b></p> 
+            {% endif %}
+
+            {% if Question.answer == 1  %}
+                <p><b>Correct Answer: {{Question.choice_1}}</b></p>
+            {% elif Question.answer == 2 %}
+                <p><b>Correct Answer: {{Question.choice_2}}</b></p>
+            {% elif Question.answer == 3  %}
+                <p><b>Correct Answer: {{Question.choice_3}}</b></p>
+            {% elif Question.answer == 4 %}
+                <p><b>Correct Answer: {{Question.choice_4}}</b></p> 
+            {% endif %}
+
+
+            {% if Quiz_user_answer.is_correct == 1 %}
+            <h5>result - </h5><p class = correct><b>CORRECT</b></p>
+            {% else %}
+            <h5>result - </h5><p class = incorr><b>INCORRECT</b></p>
+            {% endif %}
+        </div>
+    {% endfor %}
+        
+
 </div>
 {% endblock content %}

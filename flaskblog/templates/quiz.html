@@ -3,10 +3,11 @@
 <div class="content-section">
     <h1>{{ quizzes.title }}</h1>
     <p>{{ quizzes.description }}</p>
-    
+    <br />
+    <p>This quiz has <b>{{quizzes.total_score}}</b> points, Each Question is worth <b>one (1)</b> point each.</p>
     {% for question in questions.items %}
     <article class="content-section">
-        <div class="py-2 h5"><b>Q.{{ loop.index0 + 1 }} {{question.item_desc}}</b></div>
+        <div class="py-2 h5"><b>{{ loop.index0 + 1 }}.) {{question.item_desc}}</b></div>
         <div class="ml-md-3 ml-sm-3 pl-md-5 pt-sm-0 pt-3" id="options">
             <form method="POST" action = "">
                 
@@ -27,7 +28,7 @@
     
                 <label class="options">{{question.choice_4}}
                 <input type="radio" name="Choice {{ loop.index0 + 1 }}" value = 4>
-                <span class="checkmark"></span> 
+                <span class="checkmark"></span>
                 
                 </label>
                 <input type="hidden" name="answer {{ loop.index0 + 1 }}" value="{{question.answer}}"/>

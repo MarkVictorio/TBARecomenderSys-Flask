@@ -67,6 +67,7 @@ class Question(db.Model):
 class Quiz_user_answer(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    quiz_id = db.Column(db.Integer, db.ForeignKey('quiz.id'), nullable=False)
     question_id = db.Column(db.Integer, db.ForeignKey('question.id'),nullable = False)
     user_answer = db.Column(db.Integer, nullable=False)
     is_correct = db.Column(db.Boolean, nullable=False)
