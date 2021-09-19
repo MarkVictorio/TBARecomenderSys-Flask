@@ -11,10 +11,10 @@
             <form method="POST" action = "">
                 
                 <label class="options">{{question.choice_1}}
-                <input type="radio" name="Choice {{ loop.index0 + 1 }}" value = 1 > 
+                <input type="radio" name="Choice {{ loop.index0 + 1 }}" value = 1 required> 
                 <span class="checkmark"></span> 
                 </label>
-
+                
                 <label class="options">{{question.choice_2}}
                 <input type="radio" name="Choice {{ loop.index0 + 1 }}" value = 2> 
                 <span class="checkmark"></span>
@@ -30,15 +30,13 @@
                 <span class="checkmark"></span> 
                 
                 </label>
-                <input type="hidden" name="chosen" value="{{question.choices}}"/>
+                <input type="hidden" name="answer {{ loop.index0 + 1 }}" value="{{question.answer}}"/>
                 </div>
-                
         </article>
     {% endfor %}
         <div class="d-flex align-items-center pt-3">
             <div class="ml-auto mr-sm-5"><input type="submit" class = "btn btn-danger"> </div>
         </div>
         </form>
-
 </div>
 {% endblock content %}

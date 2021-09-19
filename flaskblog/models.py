@@ -71,6 +71,8 @@ class Quiz_user_answer(db.Model):
     user_answer = db.Column(db.Integer, nullable=False)
     is_correct = db.Column(db.Boolean, nullable=False)
 
+    
+
 class Quiz_user_taken(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)

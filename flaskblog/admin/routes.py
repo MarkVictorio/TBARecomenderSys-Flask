@@ -3,7 +3,7 @@ from flask import (render_template, url_for, flash,
                    redirect, request, abort, Blueprint)
 from flask_login import current_user, login_required
 from flaskblog.admin.forms import UserInputForm
-from flaskblog.models import Quiz, Question
+from flaskblog.models import Quiz, Question, Quiz_user_answer
 from flaskblog import db
 
 admin = Blueprint('admin', __name__)
@@ -35,13 +35,28 @@ def quiz(quiz_id):
     form = UserInputForm()
     u_choice = request.form.get("Choice ")
     user_choice = []
-    
+    answer = request.form.get("answer ")
+    answers = []
     for i in range(total):
         index = str(i + 1)
         u_choice = request.form.get("Choice "+ index)
         user_choice.append(u_choice)
-    
+
+    for y in range(total):
+        index = str(y + 1)
+        answer = request.form.get("answer "+ index)
+        answers.append(answer)
+
     if request.method == 'POST':
+        for j in range(len(user_choice)):
+            user_choice[j] = int(user_choice[j])
+            answers[j] = int(answers[j])
+            correct = False
+            if user_choice[j] == answers[j]:
+                correct = True
+            user_answer = Quiz_user_answer(user_id = current_user.id, question_id = j+1, user_answer = user_choice[j], is_correct = correct)
+            db.session.add(user_answer)
+            db.session.commit()
         return redirect(url_for('admin.results', quiz_id = quiz_id))
     
     return render_template('quiz.html', title = quizzes.title,     
