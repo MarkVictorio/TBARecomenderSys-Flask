@@ -35,10 +35,20 @@ def quiz(quiz_id):
     form = UserInputForm()
     u_choice = request.form.get("Choice ")
     user_choice = []
-   
+    
     for i in range(total):
         index = str(i + 1)
-        u_choice = request.form.get("Choice "+index)
+        u_choice = request.form.get("Choice "+ index)
         user_choice.append(u_choice)
+    
+    if request.method == 'POST':
+        return redirect(url_for('admin.results', quiz_id = quiz_id))
+    
     return render_template('quiz.html', title = quizzes.title,     
-        quizzes = quizzes, questions = questions, total = total, form = form, user_choice=user_choice)
+        quizzes = quizzes, questions = questions, total = total ,quiz_id = quiz_id , form = form)
+
+@admin.route("/quiz/<int:quiz_id>/results")
+@login_required
+def results(quiz_id):
+    quizzes = Quiz.query.get_or_404(quiz_id)
+    return render_template('results.html', title = 'Quiz Results',quiz_id=quiz_id)
