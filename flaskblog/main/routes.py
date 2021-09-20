@@ -20,6 +20,12 @@ def home():
 @main.route("/quiz/<int:quiz_id>", methods=['GET','POST'])
 @login_required
 def quiz(quiz_id):
+    taken = Quiz_user_taken.query.filter_by(user_id = current_user.id).first()
+    try:
+        if taken.is_taken == 1:
+            return redirect(url_for('main.results', quiz_id = quiz_id))
+    except AttributeError:
+        pass
     quizzes = Quiz.query.get_or_404(quiz_id)
     page = request.args.get('page', 1, type=int)
     questions = Question.query.filter_by(quiz_id=quiz_id).order_by(Question.quiz_id.asc()).paginate(page=page, per_page=30)
@@ -55,14 +61,13 @@ def quiz(quiz_id):
         return redirect(url_for('main.results', quiz_id = quiz_id))
     
     return render_template('quiz.html', title = quizzes.title,     
-        quizzes = quizzes, questions = questions, total = total ,quiz_id = quiz_id , form = form)
+        quizzes = quizzes, questions = questions, total = total ,quiz_id = quiz_id , form = form, taken = taken)
 
 @main.route("/quiz/<int:quiz_id>/results")
 @login_required
 def results(quiz_id):
     quizzes = Quiz.query.get_or_404(quiz_id)
-    page = request.args.get('page', 1, type=int)
-    user_results = (db.session.query(Question, Quiz_user_answer).join(Quiz_user_answer, Quiz_user_answer.id == Question.id).filter_by(quiz_id = quiz_id).all())
+    user_results = (db.session.query(Question, Quiz_user_answer).join(Quiz_user_answer, Quiz_user_answer.id == Question.id).filter_by(quiz_id = quiz_id).filter_by(user_id = current_user.id).all())
     return render_template('results.html', title = 'Quiz Results', quiz_id=quiz_id, quizzes=quizzes, user_results = user_results)
 
 @main.route("/about")
