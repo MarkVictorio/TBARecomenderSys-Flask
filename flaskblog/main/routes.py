@@ -17,6 +17,10 @@ def home():
     quizzes = Quiz.query.order_by(Quiz.id.asc()).paginate(page=page, per_page=10)
     return render_template('home.html', title='Quiz List', quizzes = quizzes)
 
+@main.route("/about")
+def about():
+    return render_template('about.html', title='About')
+
 @main.route("/quiz/<int:quiz_id>", methods=['GET','POST'])
 @login_required
 def quiz(quiz_id):
@@ -46,16 +50,18 @@ def quiz(quiz_id):
         answers.append(answer)
 
     if request.method == 'POST':
+        total_score = 0
         for j in range(len(user_choice)):
             user_choice[j] = int(user_choice[j])
             answers[j] = int(answers[j])
             correct = False
             if user_choice[j] == answers[j]:
                 correct = True
+                total_score += 1
             user_answer = Quiz_user_answer(user_id = current_user.id, question_id = j+1, user_answer = user_choice[j], is_correct = correct, quiz_id = quiz_id)
             db.session.add(user_answer)
             db.session.commit()
-        taken = Quiz_user_taken(user_id = current_user.id, quiz_id = quiz_id, is_taken = True)
+        taken = Quiz_user_taken(user_id = current_user.id, quiz_id = quiz_id, is_taken = True, total = total_score)
         db.session.add(taken)
         db.session.commit()
         return redirect(url_for('main.results', quiz_id = quiz_id))
@@ -67,9 +73,6 @@ def quiz(quiz_id):
 @login_required
 def results(quiz_id):
     quizzes = Quiz.query.get_or_404(quiz_id)
-    user_results = (db.session.query(Question, Quiz_user_answer).join(Quiz_user_answer, Quiz_user_answer.id == Question.id).filter_by(quiz_id = quiz_id).filter_by(user_id = current_user.id).all())
+    user_results = (db.session.query(Question, Quiz_user_answer).join(Quiz_user_answer).filter_by(quiz_id = quiz_id).filter_by(user_id = current_user.id).all())
     return render_template('results.html', title = 'Quiz Results', quiz_id=quiz_id, quizzes=quizzes, user_results = user_results)
 
-@main.route("/about")
-def about():
-    return render_template('about.html', title='About')

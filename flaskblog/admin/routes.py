@@ -1,10 +1,11 @@
+from functools import reduce
 from flask import Blueprint
 from flask import (render_template, url_for, flash,
                    redirect, request, abort, Blueprint)
 from flask_login import current_user, login_required
-from flaskblog.admin.forms import UserInputForm
 from flaskblog.models import Quiz, Question, Quiz_user_answer
 from flaskblog import db
+from flaskblog.admin.utils import (collabFilter) 
 
 admin = Blueprint('admin', __name__)
 
@@ -24,5 +25,10 @@ def result_list():
     quizzes = Quiz.query.order_by(Quiz.id.asc()).paginate(page=page, per_page=10)
     return render_template('result_list.html', title='Result List', quizzes = quizzes)
 
-
+@admin.route("/CFTesting", methods=['GET','POST'])
+@login_required
+def cftest():
+    if request.method == 'POST':
+        collabFilter()
+    return render_template('cftest.html', title='Central Fiction')
 

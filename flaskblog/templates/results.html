@@ -33,10 +33,42 @@
 
 
             {% if Quiz_user_answer.is_correct == 1 %}
-            <h5>result - </h5><p class = correct><b>CORRECT</b></p>
+                <p class = correct><b>Result - CORRECT</b></p>
             {% else %}
-            <h5>result - </h5><p class = incorr><b>INCORRECT</b></p>
+                <p class = incorr><b>Result - INCORRECT</b></p>
             {% endif %}
+
+            {% if Quiz_user_answer.expected == 1 %}
+                <p class = correct><b>Expected - CORRECT</b></p>
+            {% elif Quiz_user_answer.expected == 0 %}
+                <p class = incorr><b>Expected - INCORRECT</b></p>
+
+            {% endif %}
+
+            {% if Quiz_user_answer.is_correct == 1 and Quiz_user_answer.expected == 1 %}
+                <div class = "content-section">
+                    <p> > We expected you to get this question correctly and you got the question correctly! Good job! </p>
+                </div>
+            {% elif Quiz_user_answer.is_correct == 1 and Quiz_user_answer.expected == 0 %}
+                <div class = "content-section">
+                    <p> > We expected you to get this question wrong but you got the question correctly! Good job! </p>
+                    <p> However, we still recommend you to review this question. </p>
+                </div>
+            {% elif Quiz_user_answer.is_correct == 0 and Quiz_user_answer.expected == 1  %}
+                <div class = "content-section">
+                    <p> > We expected you to get this question correctly however you got the question wrong. </p>
+                    <p> We highly recommend that you review this question and similar questions to it. </p>
+                </div>
+            {% elif  Quiz_user_answer.is_correct == 0 and Quiz_user_answer.expected == 0 %}
+            <div class = "content-section">
+                <p> > We expected you to get this question wrong. Unfortunately, you did get the question wrong. </p>
+                <p> We highly recommend that you review this question and similar questions to it. </p>
+            </div>
+            {% endif %}
+
+
+
+
         </div>
     {% endfor %}
         
