@@ -5,6 +5,21 @@
     <h1>{{ quizzes.title }}</h1>
     <p>{{ quizzes.description }}</p>
 
+    <div class="content-section">
+    <h5>What is Collaborative Filtering and What Do the Results Mean?</h5>
+    <p>Once all participants have finished taking the exam, The User-User Collaborative Filtering Algorithm will give out recommendations for each question for each participant. The User-User Collaborative Filtering Algorithm takes  the results of each participant and generates expected results based on the collaborative results of all participants. Students with answers that are similar to yours will have a bigger influence on your expected results </p>
+    <p>The CF Results and Recommendations may be interpreted as the result the algorithm expects you to score, using the rest of the class as a basis; where similar students have a higher influence on your expected output</p>
+    <p>The recommendations provided by the algorithm are merely suggestions and may not be completely accurate. You may interpret the results however you would see fit </p>
+    </div>
+
+    <br/>
+
+    <h4> You got {{taken.total}} / {{quizzes.total_score}}</h4>
+    {% if tot_expected != 0 %}
+        <h4> Your CF score is {{tot_expected}} / {{quizzes.total_score}}</h4>
+    {% endif %}
+    
+    <br />
     {% for Question, Quiz_user_answer in user_results %}
         <div class = "content-section">
             <div class="py-2 h5"><b>Question {{ loop.index0 + 1 }}</b></div>
@@ -39,35 +54,32 @@
             {% endif %}
 
             {% if Quiz_user_answer.expected == 1 %}
-                <p class = correct><b>Expected - CORRECT</b></p>
+                <p class = correct><b> CF Result - CORRECT</b></p>
             {% elif Quiz_user_answer.expected == 0 %}
-                <p class = incorr><b>Expected - INCORRECT</b></p>
+                <p class = incorr><b> CF Result - INCORRECT</b></p>
 
             {% endif %}
 
             {% if Quiz_user_answer.is_correct == 1 and Quiz_user_answer.expected == 1 %}
                 <div class = "content-section">
-                    <p> > We expected you to get this question correctly and you got the question correctly! Good job! </p>
+                    <p> > Keep it up! Practice makes perfect! </p>
                 </div>
             {% elif Quiz_user_answer.is_correct == 1 and Quiz_user_answer.expected == 0 %}
                 <div class = "content-section">
-                    <p> > We expected you to get this question wrong but you got the question correctly! Good job! </p>
-                    <p> However, we still recommend you to review this question. </p>
+                    <p> > Good job! We recommend that you review this type of question/topic. </p>
+                    <p> It is likely that this type of question/topic may appear again in the future. </p>
                 </div>
             {% elif Quiz_user_answer.is_correct == 0 and Quiz_user_answer.expected == 1  %}
                 <div class = "content-section">
-                    <p> > We expected you to get this question correctly however you got the question wrong. </p>
-                    <p> We highly recommend that you review this question and similar questions to it. </p>
+                    <p> > We highly recommend that you to review this type of question/topic for the future. </p>
                 </div>
             {% elif  Quiz_user_answer.is_correct == 0 and Quiz_user_answer.expected == 0 %}
             <div class = "content-section">
-                <p> > We expected you to get this question wrong. Unfortunately, you did get the question wrong. </p>
-                <p> We highly recommend that you review this question and similar questions to it. </p>
+                <p> > We highly recommend that you review for this type of question/topic. </p>
+                <p> It is likely that this type of question/topic may appear again in the future.
+                </p>
             </div>
             {% endif %}
-
-
-
 
         </div>
     {% endfor %}

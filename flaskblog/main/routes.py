@@ -15,7 +15,7 @@ main = Blueprint('main', __name__)
 def home():
     page = request.args.get('page', 1, type=int)
     quizzes = Quiz.query.order_by(Quiz.id.asc()).paginate(page=page, per_page=10)
-    return render_template('home.html', title='Quiz List', quizzes = quizzes)
+    return render_template('home.html', title='Quiz List', quizzes = quizzes, current_user = current_user)
 
 @main.route("/about")
 def about():
@@ -72,7 +72,13 @@ def quiz(quiz_id):
 @main.route("/quiz/<int:quiz_id>/results")
 @login_required
 def results(quiz_id):
+    taken = Quiz_user_taken.query.filter_by(user_id = current_user.id).filter_by(quiz_id=quiz_id).first()
     quizzes = Quiz.query.get_or_404(quiz_id)
+    answers = Quiz_user_answer.query.filter_by(user_id = current_user.id).filter_by(quiz_id=quiz_id)
+    tot_expected = 0
+    for j in answers:
+        if j.expected == 1:
+            tot_expected += 1
     user_results = (db.session.query(Question, Quiz_user_answer).join(Quiz_user_answer).filter_by(quiz_id = quiz_id).filter_by(user_id = current_user.id).all())
-    return render_template('results.html', title = 'Quiz Results', quiz_id=quiz_id, quizzes=quizzes, user_results = user_results)
+    return render_template('results.html', title = 'Quiz Results', quiz_id=quiz_id, quizzes=quizzes, user_results = user_results, taken = taken, tot_expected = tot_expected)
 

@@ -1,6 +1,15 @@
 {% extends "layout.html" %}
 {% block content %}
     <div class="content-section">
+
+        <h1> Welcome {{current_user.username}}, to the HAU Digital Eskwela </h1> <br/>
+        <p>Hello! You have chosen to participate for our research entitled, “Test Bank Analysis and Recommender System for SOC Courses Using Collaborative Filtering Algorithm” by partaking in a simple exam.
+        <br/><br/>By agreeing that you will be participating in this study, you acknowledge that all the data you provide within the test and within the questionnaire are truthful and accurate, you also acknowledge that all data will remain anonymous and will be disposed once research has been concluded.
+        <br/><br/>There are 20 questions in the exam, and each is worth 1 point per correct answer. The main subject of the quiz will relate to Software Engineering (6SOFTWENG). Please, refrain from cheating as it will damage the integrity and the accuracy of the test results
+        <br/><br/>Once you have finished the quiz, you will be asked by the researchers to re-visit the website and view the results of your exam which will be filled with recommendations provided by the User-User Collaborative Filtering Algorithm. Then, a questionnaire will be administered after viewing the recommendations using Google Forms for Feedback Collection
+        <br/>
+        </p>
+        <br/>
         <h1>Quiz List</h1>
         <br />
         {% for quiz in quizzes.items %}

@@ -1,10 +1,16 @@
 {% extends "layout.html" %}
 {% block content %}
 <div class = "content-section">
-    <h1>THE WHEEL OF FAITH IS TURNING?</h1>
+    <h1>THE WHEEL OF FATE IS TURNING?</h1><br/>
+    {% for i in taken.items %}
+        <div class = "content-section"><h4>User {{ i.user_id }} has finished taking the test</h4></div>
+    {% endfor %}
+    <br/><br/>
     <form method="POST" action ="">
-        <div class="d-flex align-items-center pt-3">
+
+        <div class="align-items-center text-center">
            <input type="submit" class = "btn btn-danger"></div>
+
         </div>
     </form>
 </div>

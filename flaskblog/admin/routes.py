@@ -1,9 +1,10 @@
+from flaskblog.main.routes import quiz
 from functools import reduce
 from flask import Blueprint
 from flask import (render_template, url_for, flash,
                    redirect, request, abort, Blueprint)
 from flask_login import current_user, login_required
-from flaskblog.models import Quiz, Question, Quiz_user_answer
+from flaskblog.models import Quiz, Question, Quiz_user_answer, Quiz_user_taken
 from flaskblog import db
 from flaskblog.admin.utils import (collabFilter) 
 
@@ -28,7 +29,9 @@ def result_list():
 @admin.route("/CFTesting", methods=['GET','POST'])
 @login_required
 def cftest():
+    page = request.args.get('page', 1, type=int)
+    taken = Quiz_user_taken.query.order_by(Quiz_user_taken.user_id.asc()).filter_by(is_taken = 1).paginate(page=page, per_page=50)
     if request.method == 'POST':
         collabFilter()
-    return render_template('cftest.html', title='Central Fiction')
+    return render_template('cftest.html', title='Central Fiction', taken = taken)
 

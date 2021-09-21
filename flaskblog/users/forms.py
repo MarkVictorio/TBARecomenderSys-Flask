@@ -15,7 +15,6 @@ class RegistrationForm(FlaskForm):
     confirm_password = PasswordField('Confirm Password',
                                      validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Sign Up')
-    admin = BooleanField('Are you an admin? - TEST FEATURE')
 
     def validate_username(self, username):
         user = User.query.filter_by(username=username.data).first()
