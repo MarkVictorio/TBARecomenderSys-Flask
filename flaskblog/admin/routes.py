@@ -17,14 +17,6 @@ def administrator():
         return redirect(url_for('main.home'))
     return render_template('admin.html', title='Administrator Options')
 
-@admin.route("/show_results")
-@login_required
-def result_list():
-    if current_user.admin != 1:
-        return redirect(url_for('main.home'))
-    page = request.args.get('page', 1, type=int)
-    quizzes = Quiz.query.order_by(Quiz.id.asc()).paginate(page=page, per_page=10)
-    return render_template('result_list.html', title='Result List', quizzes = quizzes)
 
 @admin.route("/CFTesting", methods=['GET','POST'])
 @login_required
