@@ -54,30 +54,38 @@
             {% endif %}
 
             {% if Quiz_user_answer.expected == 1 %}
-                <p class = correct><b> CF Result - CORRECT</b></p>
+                <p><b> CF Result - CORRECT</b></p>
             {% elif Quiz_user_answer.expected == 0 %}
-                <p class = incorr><b> CF Result - INCORRECT</b></p>
+                <p><b> CF Result - INCORRECT</b></p>
 
             {% endif %}
 
             {% if Quiz_user_answer.is_correct == 1 and Quiz_user_answer.expected == 1 %}
                 <div class = "content-section">
-                    <p> > Keep it up! Practice makes perfect! </p>
+                    <p> A "correct" CF result may indicate that the class' overall performance for this question is relatively high. </p>
+                    <p> For this question, you performed well. This is relative to the class' overall performance.
+                        Good job!</p>
                 </div>
+
             {% elif Quiz_user_answer.is_correct == 1 and Quiz_user_answer.expected == 0 %}
                 <div class = "content-section">
-                    <p> > Good job! We recommend that you review this type of question/topic. </p>
-                    <p> It is likely that this type of question/topic may appear again in the future. </p>
+                    <p>An "incorrect" CF result may indicate that the class' overall performance for this question is relatively low. 
+                        It is likely that this question may appear again in the future. </p>
+                    <p>  For this question, you performed well. This is relative to the class' overall performance.
+                        Good job! </p>
                 </div>
+
             {% elif Quiz_user_answer.is_correct == 0 and Quiz_user_answer.expected == 1  %}
                 <div class = "content-section">
-                    <p> > We highly recommend that you to review this type of question/topic for the future. </p>
+                    <p> A "correct" CF result may indicate that the class' overall performance for this question is relatively high. </p>
+                    <p> We strongly recommend that you review for this question/topic.</p>
                 </div>
+
             {% elif  Quiz_user_answer.is_correct == 0 and Quiz_user_answer.expected == 0 %}
             <div class = "content-section">
-                <p> > We highly recommend that you review for this type of question/topic. </p>
-                <p> It is likely that this type of question/topic may appear again in the future.
-                </p>
+                <p> An "incorrect" CF result may indicate that the class' overall performance for this question is relatively low. 
+                    It is likely that this question may appear again in the future. </p>
+                <p> We strongly recommend that you review for this question/topic </p>
             </div>
             {% endif %}
 
